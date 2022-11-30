@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1016626639788",
+    "project_id": "microscope-61ab5",
+    "storage_bucket": "microscope-61ab5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016626639788:android:255465d936fc8f3d7dc009",
+        "android_client_info": {
+          "package_name": "com.example.microscope"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016626639788-9ujuvpkrbbjg6voh3kn5patulcgl5ll6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlS4GElQbD4lEB-uPHI9PmOZZzqIkgl3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016626639788-9ujuvpkrbbjg6voh3kn5patulcgl5ll6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1016626639788-ve0plu5k6p3hvfocm862e5hjaen1fl3o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.microscope"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
