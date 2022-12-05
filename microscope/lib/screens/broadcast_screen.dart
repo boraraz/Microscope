@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:microscope/config/appId.dart';
 import 'package:microscope/provider/user_provider.dart';
+import 'package:microscope/widgets/chat.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
@@ -132,15 +133,20 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     InkWell(
-                        onTap: _switchCamera,
-                        child: const Text('Switch Camera'),
-                        ),
-                        InkWell(
-                        onTap: onToggleMute,
-                        child:  Text(isMuted ? 'Unmute':'Mute'),
-                        )
+                      onTap: _switchCamera,
+                      child: const Text('Switch Camera'),
+                    ),
+                    InkWell(
+                      onTap: onToggleMute,
+                      child: Text(isMuted ? 'Unmute' : 'Mute'),
+                    )
                   ],
-                )
+                ),
+              Expanded(
+                child: Chat(
+                  channelId: widget.channelId,
+                ),
+              ),
             ],
           ),
         ),
