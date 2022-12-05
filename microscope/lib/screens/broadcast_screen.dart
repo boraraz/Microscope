@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
@@ -5,6 +6,7 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:microscope/config/appId.dart';
+import 'package:microscope/models/user.dart';
 import 'package:microscope/provider/user_provider.dart';
 import 'package:microscope/widgets/chat.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -13,6 +15,7 @@ import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:microscope/resources/firestore.methods.dart';
 import 'package:microscope/screens/home_screen.dart';
+import 'package:http/http.dart' as http;
 
 class BroadcastScreen extends StatefulWidget {
   final bool isBroadcaster;
@@ -52,6 +55,29 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
     _joinChannel();
   }
 
+  String baseUrl = "https://microscope429.herokuapp.com/";
+  String? token;
+
+  Future<void> getToken() async {
+    final res = await http.get(
+      Uri.parse(baseUrl +
+          '/rtc/' +
+          widget.channelId +
+          '/publisher/userAccount' +
+          Provider.of<UserProvider>(context, listen: false).user.uid +
+          '/'),
+    );
+
+    if (res.statusCode == 200) {
+      setState(() {
+        token = res.body;
+        token = jsonDecode(token!)['rtcToken'];
+      });
+    } else {
+      debugPrint('Failed to fetch the token');
+    }
+  }
+
   void _addListeners() {
     _engine.setEventHandler(
         RtcEngineEventHandler(joinChannelSuccess: (channel, uid, elapsed) {
@@ -71,15 +97,19 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
       setState(() {
         remoteUid.clear();
       });
+    }, tokenPrivilegeWillExpire: (token) async { 
+      await getToken();
+      await _engine.renewToken(token);
     }));
   }
 
   void _joinChannel() async {
+    await getToken();
     if (defaultTargetPlatform == TargetPlatform.android) {
       await [Permission.microphone, Permission.camera].request();
     }
     await _engine.joinChannelWithUserAccount(
-      tempToken,
+      token,
       'testing123',
       Provider.of<UserProvider>(context, listen: false).user.uid,
     );
@@ -132,7 +162,9 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    if(widget.isBroadcaster == true)
                     InkWell(
+                      
                       onTap: _switchCamera,
                       child: const Text('Switch Camera'),
                     ),
