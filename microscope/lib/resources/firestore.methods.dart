@@ -65,7 +65,7 @@ class FirestoreMethods {
     try {
       String commentId = const Uuid().v1();
       await _firestore
-          .collection('livestreams')
+          .collection('livestream')
           .doc(id)
           .collection('comments')
           .doc(commentId)

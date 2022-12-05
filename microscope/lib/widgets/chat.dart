@@ -41,30 +41,31 @@ class _ChatState extends State<Chat> {
                   .collection('livestream')
                   .doc(widget.channelId)
                   .collection('comments')
-                  .orderBy(
-                    'createdAt',
-                    descending: true,
-                  )
+                  .orderBy('createdAt', descending: true)
                   .snapshots(),
-              builder: (
-                context,
-                snapshot,
-              ) {
+              builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const LoadingIndicator();
                 }
+
                 return ListView.builder(
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context, index) => ListTile(
                     title: Text(
                       snapshot.data.docs[index]['username'],
                       style: TextStyle(
-                          color: snapshot.data.docs[index]['uid'] ==
-                                  userProvider.user.uid
-                              ? Colors.blue
-                              : Colors.red),
+                        color: snapshot.data.docs[index]['uid'] ==
+                                userProvider.user.uid
+                            ? Colors.red
+                            : Colors.blue,
+                      ),
                     ),
-                    subtitle: Text(snapshot.data.docs[index]['message']),
+                    subtitle: Text(
+                      snapshot.data.docs[index]['message'],
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 );
               },
