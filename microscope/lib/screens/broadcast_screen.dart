@@ -164,11 +164,14 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
                   children: [
                     if(widget.isBroadcaster == true)
                     InkWell(
-                      
+                      hoverColor: Colors.pinkAccent,
+                      highlightColor: Colors.pink,
                       onTap: _switchCamera,
-                      child: const Text('Switch Camera'),
+                      child: const Text('Switch Camera', style: TextStyle(color: Colors.pinkAccent),),
                     ),
                     InkWell(
+                      hoverColor: Colors.pinkAccent,
+                      highlightColor: Colors.pink,
                       onTap: onToggleMute,
                       child: Text(isMuted ? 'Unmute' : 'Mute'),
                     )
@@ -188,7 +191,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
 
   _renderVideo(user) {
     return AspectRatio(
-      aspectRatio: 16 / 9,
+      aspectRatio: 1/1 ,
       child: "${user.uid}${user.username}" == widget.channelId
           ? const RtcLocalView.SurfaceView(
               zOrderMediaOverlay: true,
