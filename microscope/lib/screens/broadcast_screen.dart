@@ -9,6 +9,7 @@ import 'package:microscope/config/appId.dart';
 import 'package:microscope/models/user.dart';
 import 'package:microscope/provider/user_provider.dart';
 import 'package:microscope/widgets/chat.dart';
+import 'package:microscope/widgets/custom_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
@@ -132,7 +133,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
     await _engine.muteLocalAudioStream(isMuted);
   }
 
- _leaveChannel() async {
+  _leaveChannel() async {
     await _engine.leaveChannel();
     if ('${Provider.of<UserProvider>(context, listen: false).user.uid}${Provider.of<UserProvider>(context, listen: false).user.username}' ==
         widget.channelId) {
@@ -152,6 +153,15 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
         return Future.value(true);
       },
       child: Scaffold(
+        bottomNavigationBar: widget.isBroadcaster
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: CustomButton(
+                  onTap: _leaveChannel,
+                  text: 'End Stream',
+                ),
+              )
+            : null,
         body: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
@@ -172,13 +182,13 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
                           style: TextStyle(color: Colors.pinkAccent),
                         ),
                       ),
-                      if (widget.isBroadcaster == true)
-                    InkWell(
-                      hoverColor: Colors.pinkAccent,
-                      highlightColor: Colors.pink,
-                      onTap: onToggleMute,
-                      child: Text(isMuted ? 'Unmute' : 'Mute'),
-                    )
+                    if (widget.isBroadcaster == true)
+                      InkWell(
+                        hoverColor: Colors.pinkAccent,
+                        highlightColor: Colors.pink,
+                        onTap: onToggleMute,
+                        child: Text(isMuted ? 'Unmute' : 'Mute'),
+                      )
                   ],
                 ),
               Expanded(
