@@ -55,7 +55,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
     _joinChannel();
   }
 
-  String baseUrl = "https://microscope429.herokuapp.com/";
+  String baseUrl = "https://microscope429.herokuapp.com";
   String? token;
 
   Future<void> getToken() async {
@@ -97,7 +97,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
       setState(() {
         remoteUid.clear();
       });
-    }, tokenPrivilegeWillExpire: (token) async { 
+    }, tokenPrivilegeWillExpire: (token) async {
       await getToken();
       await _engine.renewToken(token);
     }));
@@ -110,7 +110,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
     }
     await _engine.joinChannelWithUserAccount(
       token,
-      'testing123',
+      widget.channelId,
       Provider.of<UserProvider>(context, listen: false).user.uid,
     );
   }
@@ -162,13 +162,16 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    if(widget.isBroadcaster == true)
-                    InkWell(
-                      hoverColor: Colors.pinkAccent,
-                      highlightColor: Colors.pink,
-                      onTap: _switchCamera,
-                      child: const Text('Switch Camera', style: TextStyle(color: Colors.pinkAccent),),
-                    ),
+                    if (widget.isBroadcaster == true)
+                      InkWell(
+                        hoverColor: Colors.pinkAccent,
+                        highlightColor: Colors.pink,
+                        onTap: _switchCamera,
+                        child: const Text(
+                          'Switch Camera',
+                          style: TextStyle(color: Colors.pinkAccent),
+                        ),
+                      ),
                     InkWell(
                       hoverColor: Colors.pinkAccent,
                       highlightColor: Colors.pink,
@@ -191,7 +194,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
 
   _renderVideo(user) {
     return AspectRatio(
-      aspectRatio: 1/1 ,
+      aspectRatio: 1 / 1,
       child: "${user.uid}${user.username}" == widget.channelId
           ? const RtcLocalView.SurfaceView(
               zOrderMediaOverlay: true,
