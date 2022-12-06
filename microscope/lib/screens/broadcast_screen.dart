@@ -63,7 +63,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
       Uri.parse(baseUrl +
           '/rtc/' +
           widget.channelId +
-          '/publisher/userAccount' +
+          '/publisher/userAccount/' +
           Provider.of<UserProvider>(context, listen: false).user.uid +
           '/'),
     );
@@ -132,7 +132,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
     await _engine.muteLocalAudioStream(isMuted);
   }
 
-  _leaveChannel() async {
+ _leaveChannel() async {
     await _engine.leaveChannel();
     if ('${Provider.of<UserProvider>(context, listen: false).user.uid}${Provider.of<UserProvider>(context, listen: false).user.username}' ==
         widget.channelId) {
@@ -172,6 +172,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
                           style: TextStyle(color: Colors.pinkAccent),
                         ),
                       ),
+                      if (widget.isBroadcaster == true)
                     InkWell(
                       hoverColor: Colors.pinkAccent,
                       highlightColor: Colors.pink,
