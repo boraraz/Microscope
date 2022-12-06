@@ -18,9 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> pages = [
     const FeedScreen(),
     const GoLiveScreen(),
-    const Center(
-      child: Text("Browse"),
-    ),
   ];
 
   onPageChange(int page) {
@@ -44,16 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _page,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Following',
+            icon: Icon(Icons.copy_rounded),
+            label: 'Feed',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_rounded),
             label: 'Go Live',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.copy),
-            label: 'Browse',
           ),
         ],
       ),
