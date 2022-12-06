@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:microscope/models/livestream.dart';
+import 'package:microscope/resources/firestore.methods.dart';
+import 'package:microscope/screens/broadcast_screen.dart';
 import 'package:microscope/widgets/loading_indicator.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -48,7 +50,18 @@ class _FeedScreenState extends State<FeedScreen> {
                       LiveStream post =
                           LiveStream.fromMap(snapshot.data.docs[index].data());
                       return InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          await FirestoreMethods()
+                              .updateViewCount(post.channelId, true);
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => BroadcastScreen(
+                                isBroadcaster: false,
+                                channelId: post.channelId,
+                              ),
+                            ),
+                          );
+                        },
                         child: Container(
                           height: size.height * 0.1,
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
