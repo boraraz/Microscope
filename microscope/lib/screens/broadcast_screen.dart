@@ -167,28 +167,58 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
           child: Column(
             children: [
               _renderVideo(user),
+              const SizedBox(
+                height: 10.0,
+              ),
               if ("${user.uid}${user.username}" == widget.channelId)
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    if (widget.isBroadcaster == true)
-                      InkWell(
-                        hoverColor: Colors.pinkAccent,
-                        highlightColor: Colors.pink,
-                        onTap: _switchCamera,
-                        child: const Text(
-                          'Switch Camera',
-                          style: TextStyle(color: Colors.pinkAccent),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (widget.isBroadcaster == true)
+                          InkWell(
+                            hoverColor: Colors.pinkAccent,
+                            highlightColor: Colors.pink,
+                            onTap: _switchCamera,
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 100,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Text(
+                                'Switch Camera',
+                                style: TextStyle(color: Colors.pinkAccent),
+                              ),
+                            ),
+                          ),
+                        const SizedBox(
+                          width: 15.0,
                         ),
-                      ),
-                    if (widget.isBroadcaster == true)
-                      InkWell(
-                        hoverColor: Colors.pinkAccent,
-                        highlightColor: Colors.pink,
-                        onTap: onToggleMute,
-                        child: Text(isMuted ? 'Unmute' : 'Mute'),
-                      )
+                        if (widget.isBroadcaster == true)
+                          InkWell(
+                            hoverColor: Colors.pinkAccent,
+                            highlightColor: Colors.pink,
+                            onTap: onToggleMute,
+                            child: Container(
+                                alignment: Alignment.center,
+                                width: 100,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Text(isMuted ? 'Unmute' : 'Mute')),
+                          )
+                      ],
+                    ),
                   ],
                 ),
               Expanded(
