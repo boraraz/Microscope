@@ -99,12 +99,6 @@ class _FeedScreenState extends State<FeedScreen> {
                                   ),
                                 ],
                               ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.more_vert,
-                                ),
-                              ),
                             ],
                           ),
                         ),

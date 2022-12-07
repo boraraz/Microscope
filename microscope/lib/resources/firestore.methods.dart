@@ -26,7 +26,7 @@ class FirestoreMethods {
                 .get())
             .exists)) {
           String thumbnailUrl = await _storageMethods.uploadImageToStorage(
-            'livestream-thumbnail',
+            'livestream-thumbnails',
             image,
             user.user.uid,
           );

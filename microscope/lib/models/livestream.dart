@@ -31,7 +31,7 @@ class LiveStream {
   factory LiveStream.fromMap(Map<String, dynamic> map) {
     return LiveStream(
       title: map['title'] ?? '',
-      image: map[' image'] ?? '',
+      image: map['image'] ?? '',
       uid: map['uid'] ?? '',
       username: map['username'] ?? '',
       viewers: map['viewers ']?.toInt() ?? 0,
