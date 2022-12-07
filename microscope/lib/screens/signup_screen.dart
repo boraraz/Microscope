@@ -30,8 +30,8 @@ class _SignupScreenState extends State<SignupScreen> {
     bool res = await _authMethods.signUpUser(
       context,
       _emailController.text,
-      _passwordController.text,
       _usernameController.text,
+      _passwordController.text,
     );
     setState(() {
       _isLoading = false;
@@ -108,6 +108,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: CustomTextField(
                       controller: _passwordController,
+                      isPassword: true,
                     ),
                   ),
                   const SizedBox(

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:microscope/utils/colors.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({Key? key, required this.onTap, required this.text})
-      : super(key: key);
+  const CustomButton({
+    Key? key,
+    required this.onTap,
+    required this.text,
+  }) : super(key: key);
   final String text;
   final VoidCallback onTap;
 

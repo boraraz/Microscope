@@ -92,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: CustomTextField(
                       controller: _passwordController,
+                      isPassword: true,
                     ),
                   ),
                   const SizedBox(

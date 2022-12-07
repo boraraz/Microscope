@@ -4,15 +4,18 @@ import 'package:microscope/utils/colors.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String)? onTap;
+  final bool? isPassword;
   const CustomTextField({
     Key? key,
     required this.controller,
     this.onTap,
+    this.isPassword,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      obscureText: isPassword ?? false,
       onSubmitted: onTap,
       style: const TextStyle(
         color: Colors.white,

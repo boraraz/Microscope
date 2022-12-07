@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:microscope/provider/user_provider.dart';
 import 'package:microscope/screens/feed_screen.dart';
 import 'package:microscope/screens/go_live_screen.dart';
+import 'package:microscope/screens/onboarding_screen.dart';
 import 'package:microscope/utils/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        leading: IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () {
+            Navigator.pushNamed(context, OnboardingScreen.routeName);
+          },
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
