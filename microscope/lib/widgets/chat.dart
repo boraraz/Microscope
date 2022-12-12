@@ -33,37 +33,45 @@ class _ChatState extends State<Chat> {
     return SizedBox(
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(
+            height: size.height / 2.0,
+          ),
           Expanded(
             child: StreamBuilder<dynamic>(
               stream: FirebaseFirestore.instance
                   .collection('livestream')
                   .doc(widget.channelId)
                   .collection('comments')
-                  .orderBy('createdAt', descending: true)
+                  .orderBy(
+                    'createdAt',
+                    descending: true,
+                  )
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const LoadingIndicator();
                 }
-
                 return ListView.builder(
+                  reverse: true,
                   itemCount: snapshot.data.docs.length,
-                  itemBuilder: (context, index) => ListTile(
-                    title: Text(
-                      snapshot.data.docs[index]['username'],
-                      style: TextStyle(
-                        color: snapshot.data.docs[index]['uid'] ==
-                                userProvider.user.uid
-                            ? Colors.red
-                            : Colors.blue,
+                  itemBuilder: (context, index) => Container(
+                    color: const Color.fromRGBO(130, 130, 130, 0.7),
+                    child: ListTile(
+                      title: Text(
+                        snapshot.data.docs[index]['username'],
+                        style: TextStyle(
+                          color: snapshot.data.docs[index]['uid'] ==
+                                  userProvider.user.uid
+                              ? Colors.red
+                              : Colors.blue,
+                        ),
                       ),
-                    ),
-                    subtitle: Text(
-                      snapshot.data.docs[index]['message'],
-                      style: const TextStyle(
-                        color: Colors.black,
+                      subtitle: Text(
+                        snapshot.data.docs[index]['message'],
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:microscope/resources/auth_method.dart';
 import 'package:microscope/screens/home_screen.dart';

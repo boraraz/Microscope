@@ -1,16 +1,14 @@
+// ignore_for_file: library_prefixes, prefer_interpolation_to_compose_strings, use_build_context_synchronously
+
 import 'dart:convert';
-import 'dart:math';
-import 'dart:ui';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:microscope/config/appId.dart';
-import 'package:microscope/models/user.dart';
 import 'package:microscope/provider/user_provider.dart';
 import 'package:microscope/utils/colors.dart';
 import 'package:microscope/widgets/chat.dart';
-import 'package:microscope/widgets/custom_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
@@ -154,62 +152,93 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
         return Future.value(true);
       },
       child: Scaffold(
-        bottomNavigationBar: widget.isBroadcaster
-            ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                child: CustomButton(
-                  onTap: _leaveChannel,
-                  text: 'End Stream',
-                ),
-              )
-            : null,
-        body: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              _renderVideo(user),
-              const SizedBox(
-                height: 10.0,
-              ),
-              if ("${user.uid}${user.username}" == widget.channelId)
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (widget.isBroadcaster == true)
-                          InkWell(
-                            hoverColor: Colors.pinkAccent,
-                            highlightColor: Colors.pink,
-                            onTap: _switchCamera,
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: 100,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: buttonColor,
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Text(
-                                'Switch Camera',
-                                style: TextStyle(color: Colors.white),
+        body: _renderVideo(user),
+      ),
+    );
+  }
+
+  _renderVideo(user) {
+    return SafeArea(
+      child: AspectRatio(
+        aspectRatio: 9 / 18,
+        child: Stack(
+          children: [
+            "${user.uid}${user.username}" == widget.channelId
+                ? const RtcLocalView.SurfaceView(
+                    zOrderMediaOverlay: true,
+                    zOrderOnTop: true,
+                  )
+                : remoteUid.isNotEmpty
+                    ? kIsWeb
+                        ? RtcRemoteView.SurfaceView(
+                            uid: remoteUid[0],
+                            channelId: widget.channelId,
+                          )
+                        : RtcRemoteView.TextureView(
+                            uid: remoteUid[0],
+                            channelId: widget.channelId,
+                          )
+                    : Container(),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, right: 8.0, left: 8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          if (widget.isBroadcaster == true)
+                            InkWell(
+                              onTap: _leaveChannel,
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 50,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Icon(
+                                  Icons.exit_to_app_rounded,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
-                        const SizedBox(
-                          width: 15.0,
-                        ),
-                        if (widget.isBroadcaster == true)
-                          InkWell(
-                            hoverColor: Colors.pinkAccent,
-                            highlightColor: Colors.pink,
-                            onTap: onToggleMute,
-                            child: Container(
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          if (widget.isBroadcaster == true)
+                            InkWell(
+                              onTap: _switchCamera,
+                              child: Container(
                                 alignment: Alignment.center,
-                                width: 100,
+                                width: 50,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Icon(
+                                  Icons.switch_camera,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          const SizedBox(
+                            width: 5.0,
+                          ),
+                          if (widget.isBroadcaster == true)
+                            InkWell(
+                              onTap: onToggleMute,
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 50,
                                 height: 40,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -220,43 +249,25 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
                                     width: 2,
                                   ),
                                 ),
-                                child: Text(isMuted ? 'Unmute' : 'Mute')),
-                          )
-                      ],
-                    ),
-                  ],
-                ),
-              Expanded(
-                child: Chat(
-                  channelId: widget.channelId,
-                ),
+                                child: Icon(
+                                  isMuted ? Icons.mic_off : Icons.mic,
+                                  color: buttonColor,
+                                ),
+                              ),
+                            )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Chat(
+              channelId: widget.channelId,
+            ),
+          ],
         ),
       ),
-    );
-  }
-
-  _renderVideo(user) {
-    return AspectRatio(
-      aspectRatio: 1 / 1,
-      child: "${user.uid}${user.username}" == widget.channelId
-          ? const RtcLocalView.SurfaceView(
-              zOrderMediaOverlay: true,
-              zOrderOnTop: true,
-            )
-          : remoteUid.isNotEmpty
-              ? kIsWeb
-                  ? RtcRemoteView.SurfaceView(
-                      uid: remoteUid[0],
-                      channelId: widget.channelId,
-                    )
-                  : RtcRemoteView.TextureView(
-                      uid: remoteUid[0],
-                      channelId: widget.channelId,
-                    )
-              : Container(),
     );
   }
 }

@@ -1,10 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:microscope/provider/user_provider.dart';
 import 'package:microscope/screens/feed_screen.dart';
 import 'package:microscope/screens/go_live_screen.dart';
 import 'package:microscope/screens/onboarding_screen.dart';
 import 'package:microscope/utils/colors.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = '/home_screen';
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
-        unselectedItemColor: Color.fromARGB(255, 13, 0, 112),
+        unselectedItemColor: const Color.fromARGB(255, 13, 0, 112),
         backgroundColor: buttonColor,
         unselectedFontSize: 12,
         onTap: onPageChange,

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,7 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
           builder: (context) => BroadcastScreen(
             isBroadcaster: true,
             channelId: channelId,
-            ),
+          ),
         ),
       );
     }
@@ -86,13 +88,13 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
+                                  children: const [
+                                    Icon(
                                       Icons.folder_open,
                                       color: folderIcon,
                                       size: 40,
                                     ),
-                                    const SizedBox(height: 15),
+                                    SizedBox(height: 15),
                                     Text("Select a thumbnail",
                                         style: TextStyle(
                                           fontSize: 15,

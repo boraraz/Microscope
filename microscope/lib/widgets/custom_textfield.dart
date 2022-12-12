@@ -5,6 +5,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String)? onTap;
   final bool? isPassword;
+
   const CustomTextField({
     Key? key,
     required this.controller,
@@ -22,6 +23,8 @@ class CustomTextField extends StatelessWidget {
       ),
       controller: controller,
       decoration: const InputDecoration(
+        filled: true,
+        fillColor: Color.fromRGBO(233, 233, 233, 50),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: buttonColor,
