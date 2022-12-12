@@ -63,7 +63,7 @@ class _ChatState extends State<Chat> {
                     subtitle: Text(
                       snapshot.data.docs[index]['message'],
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ),

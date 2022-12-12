@@ -31,9 +31,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text(
+          'Home',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.logout),
+          icon: const Icon(
+            Icons.logout,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.pushNamed(context, OnboardingScreen.routeName);
           },
@@ -41,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
-        unselectedItemColor: Color.fromARGB(255, 64, 0, 112),
+        unselectedItemColor: Color.fromARGB(255, 13, 0, 112),
         backgroundColor: buttonColor,
         unselectedFontSize: 12,
         onTap: onPageChange,

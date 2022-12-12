@@ -18,7 +18,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: isPassword ?? false,
       onSubmitted: onTap,
       style: const TextStyle(
-        color: Colors.white,
+        color: Colors.black,
       ),
       controller: controller,
       decoration: const InputDecoration(

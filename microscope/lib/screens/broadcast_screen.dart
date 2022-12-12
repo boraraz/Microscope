@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:microscope/config/appId.dart';
 import 'package:microscope/models/user.dart';
 import 'package:microscope/provider/user_provider.dart';
+import 'package:microscope/utils/colors.dart';
 import 'package:microscope/widgets/chat.dart';
 import 'package:microscope/widgets/custom_button.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -188,13 +189,13 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
                               width: 100,
                               height: 40,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: buttonColor,
                                 shape: BoxShape.rectangle,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Text(
                                 'Switch Camera',
-                                style: TextStyle(color: Colors.pinkAccent),
+                                style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
@@ -214,6 +215,10 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
                                   color: Colors.white,
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: buttonColor,
+                                    width: 2,
+                                  ),
                                 ),
                                 child: Text(isMuted ? 'Unmute' : 'Mute')),
                           )
